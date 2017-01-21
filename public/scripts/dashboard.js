@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-    UpdateChromecast();
+    ValidateChromecast();
 
     // Start clock
     var interval = setInterval(function() {
@@ -125,11 +125,14 @@ $( document ).ready(function() {
         }, "json");
     });
 
-    function UpdateChromecast() {
+    function ValidateChromecast() {
         $.get( "/api/session", function( data ) {
-            console.log(data);
-            android.update(JSON.stringify(data));
+            android.login(JSON.stringify(data));
         });
+    }
+
+    function UpdateChromecast() {
+        android.update();
     }
 
 });

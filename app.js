@@ -217,35 +217,10 @@ app.post('/api/drop', function (req, res) {
             }
             res.end();
         });
-
-        //widgets_table.insert({
-        //
-        //    "_rev": req.body.rev,
-        //    "user": req.session.user._id,
-        //    "x1": req.body.x1,
-        //    "x2": req.body.x2,
-        //    "y1": req.body.y1,
-        //    "y2": req.body.y2,
-        //    "type": req.body.type,
-        //    "type_id": req.body.type_id
-        //}, function (err, result) {
-        //    if (err) {
-        //        console.log(err);
-        //        res.sendStatus(500);
-        //    } else {
-        //        result.email = req.body.email;
-        //        req.session.user = result;
-        //        res.send(result);
-        //    }
-        //    res.end();
-        //});
     });
 });
 
 app.get('/api/session', function (req, res) {
-    console.log("This is /api/session");
-    console.log("This means UpdateChromecast() was called.");
-    console.log(req.session.user);
     res.setHeader('Content-Type', 'application/json');
     res.send(req.session.user);
 });

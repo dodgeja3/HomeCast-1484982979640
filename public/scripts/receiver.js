@@ -1,18 +1,10 @@
 $(document).ready(function () {
-    //console.log("HA!")
     // utility function to display the text message in the input field
-    function process(user) {
-        //var u = JSON.parse(user);
-        //$.post( "/loginUser", {
-        //    email: u.email,
-        //    password: u.password
-        //}, function( data ) {
-        //
-        //}, "json");
-        //
-        //document.getElementById("message").innerHTML=user;
-        //document.getElementById("test").innerHTML="Test";
-        //window.castReceiverManager.setApplicationState(user);
+    function process(message) {
+        message = JSON.parse(message);
+        if (message.action == "update") {
+            location.reload();
+        }
     }
 
 
