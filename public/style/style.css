@@ -228,7 +228,9 @@ tr:hover .deleteBtn {
 }
 
 .frame {
-	width: 100%;
+	position: relative;
+	top: 200px;
+	width: 50%;
 }
 
 .test {

@@ -1,5 +1,6 @@
 $(document).ready(function () {
-    $(".frame").height($(window).height());
+    //$(".frame").height($(window).height());
+    $(".frame").height(200);
 
     // utility function to display the text message in the input field
     function process(message) {
