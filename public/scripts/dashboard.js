@@ -131,9 +131,9 @@ $(document).ready(function () {
                 android.login(JSON.stringify(data));
             });
         //}
-        else {
-
-        }
+        //else {
+        //
+        //}
     }
 
     function UpdateChromecast() {
