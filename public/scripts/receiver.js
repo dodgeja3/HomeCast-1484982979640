@@ -2,15 +2,13 @@ $(document).ready(function () {
     //console.log("HA!")
     // utility function to display the text message in the input field
     function login(user) {
-        console.log(user);
-        console.log("This means the message went through.");
-
-        //$.post( "/loginUser", {
-        //    email: user.email,
-        //    password: user.password
-        //}, function( data ) {
-        //
-        //}, "json");
+        var u = JSON.parse(user);
+        $.post( "/loginUser", {
+            email: u.email,
+            password: u.password
+        }, function( data ) {
+        
+        }, "json");
 
         document.getElementById("message").innerHTML=user;
         document.getElementById("test").innerHTML="Test";
