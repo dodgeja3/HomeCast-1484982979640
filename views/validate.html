@@ -11,7 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
     <!--<script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>-->
-    <!--<script src="/scripts/receiver.js"></script>-->
+    <script src="/scripts/receiver.js"></script>
     <title>Validate</title>
 </head>
 <body>
@@ -55,7 +55,7 @@ HOLY FARTBUCKET!!!!!
             window.messageBus.onMessage = function(event) {
                 console.log('Message [' + event.senderId + ']: ' + event.data);
                 // display the message from the sender
-                Login(JSON.parse(event.data));
+                Login(event.data);
                 // inform all senders on the CastMessageBus of the incoming message event
                 // sender message listener will be invoked
                 window.messageBus.send(event.senderId, event.data);
