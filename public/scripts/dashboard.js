@@ -126,7 +126,7 @@ $( document ).ready(function() {
     function UpdateChromecast() {
         $.get( "/api/session", function( data ) {
             console.log(data);
-            android.update(data);
+            android.update(JSON.stringify(data));
         });
     }
 
