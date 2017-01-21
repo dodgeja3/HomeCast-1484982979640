@@ -152,6 +152,7 @@ app.post('/loginUser', function (req, res) {
             res.render('login.html', {error: 'Invalid email.'});
         } else {
             user = results.docs[0];
+            console.log("This is /loginUser");
             console.log(user);
             if (req.body.password == user.password) {
                 req.session.user = user;
@@ -194,7 +195,6 @@ app.post('/api/add', function (req, res) {
 
 app.post('/api/drop', function (req, res) {
     widgets_table.find({selector: {_id: req.body.id}}, function (err, results) {
-        console.log(results.docs[0]);
         var doc = results.docs[0];
         doc.x1 = req.body.x1;
         doc.x2 = req.body.x2;
@@ -236,6 +236,8 @@ app.post('/api/drop', function (req, res) {
 });
 
 app.get('/api/session', function (req, res) {
+    console.log("This is /api/session");
+    console.log("This means UpdateChromecast() was called.");
     console.log(req.session.user);
     res.setHeader('Content-Type', 'application/json');
     res.send(req.session.user);

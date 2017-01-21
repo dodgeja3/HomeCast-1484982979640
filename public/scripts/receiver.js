@@ -2,6 +2,7 @@ $(document).ready(function () {
     // utility function to display the text message in the input field
     function login(user) {
         console.log(user);
+        console.log("This means the message went through.");
 
         $.post( "/loginUser", {
             email: user.email,
