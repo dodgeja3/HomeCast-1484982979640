@@ -88,7 +88,7 @@ initDBConnection();
 
 app.get('/', routes.index);
 
-app.get('/receiver', routes.receiver);
+app.get('/receiver', receiver);
 
 function createResponseData(id, name, value, attachments) {
 
