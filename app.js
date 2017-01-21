@@ -107,7 +107,13 @@ app.get('/', function(req, res){
 });
 
 app.get('/receiver', function(req, res){
-    res.render('receiver.html');
+    if (req.session.user) {
+        console.log(req.session.user);
+        res.render('receiver.html');
+    }
+    else {
+        res.redirect('/signup');
+    }
 });
 
 app.get('/signup', function(req, res){
@@ -129,7 +135,7 @@ app.post('/createUser', function(req, res){
         } else {
             result.email = req.body.email;
             req.session.user = result;
-            res.redirect('/');
+            res.redirect('/receiver');
         }
         res.end();
     });
@@ -143,7 +149,7 @@ app.post('/loginUser', function(req, res) {
             user = results.docs[0];
             if (req.body.password == user.password) {
                 req.session.user = user;
-                res.redirect('/');
+                res.redirect('/receiver');
             } else {
                 res.render('login.html', { error: 'Invalid email or password.' });
             }
