@@ -113,17 +113,24 @@ app.get('/', function (req, res) {
 
 app.get('/receiver', function (req, res) {
     //res.render('receiver.html');
+    res.setHeader('Content-Type', 'application/json');
     if (req.session.user) {
         console.log(req.session.user);
-        res.render('receiver.html');
+        //res.render('receiver.html');
+        res.send(req.session.user);
     }
     else {
-        res.redirect('/login');
+        //res.redirect('/login');
+        res.send(false);
     }
 });
 
-app.get('/validate', function (req, res) {
-    res.render('validate.html');
+//app.get('/validate', function (req, res) {
+//    res.render('validate.html');
+//});
+
+app.get('/main', function (req, res) {
+    res.render('main.html');
 });
 
 app.get('/signup', function (req, res) {

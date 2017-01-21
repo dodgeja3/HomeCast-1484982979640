@@ -2,14 +2,44 @@ $(document).ready(function () {
     // utility function to display the text message in the input field
     function process(message) {
         document.getElementById("test").innerHTML=message;
-        window.castReceiverManager.setApplicationState(user);
+        window.castReceiverManager.setApplicationState(message);
 
         //$(".test").html(message);
         message = JSON.parse(message);
         if (message.action == "update") {
             location.reload();
         }
+        else if (message.action == "login") {
+            var u = JSON.parse(message.user);
+            $.post( "/loginUser", {
+                email: u.email,
+                password: u.password
+            }, function( data ) {
+                if (data.email) {
+                    //window.location.href = "/receiver";
+                    $(".frame").attr('src', "/receiver")
+                }
+            }, "json");
+
+            document.getElementById("message").innerHTML=user;
+            window.castReceiverManager.setApplicationState(user);
+        }
     }
+
+    //function login(user) {
+    //    var u = JSON.parse(user);
+    //    $.post( "/loginUser", {
+    //        email: u.email,
+    //        password: u.password
+    //    }, function( data ) {
+    //        if (data.email) {
+    //            window.location.href = "/receiver";
+    //        }
+    //    }, "json");
+    //
+    //    document.getElementById("message").innerHTML=user;
+    //    window.castReceiverManager.setApplicationState(user);
+    //}
 
 
     cast.receiver.logger.setLevelValue(0);
