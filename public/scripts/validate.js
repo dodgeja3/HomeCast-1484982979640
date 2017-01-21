@@ -6,7 +6,9 @@ $(document).ready(function () {
             email: u.email,
             password: u.password
         }, function( data ) {
-
+            if (data.email) {
+                window.location.href = "/receiver";
+            }
         }, "json");
 
         document.getElementById("message").innerHTML=user;
