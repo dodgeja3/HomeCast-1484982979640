@@ -112,13 +112,14 @@ app.get('/', function (req, res) {
 });
 
 app.get('/receiver', function (req, res) {
-    if (req.session.user) {
-        console.log(req.session.user);
-        res.render('receiver.html');
-    }
-    else {
-        res.redirect('/login');
-    }
+    res.render('receiver.html');
+    //if (req.session.user) {
+    //    console.log(req.session.user);
+    //    res.render('receiver.html');
+    //}
+    //else {
+    //    res.redirect('/login');
+    //}
 });
 
 app.get('/signup', function (req, res) {
