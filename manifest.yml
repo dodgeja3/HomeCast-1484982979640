@@ -1,0 +1,11 @@
+applications:
+- path: .
+  memory: 512M
+  instances: 1
+  domain: mybluemix.net
+  name: HomeCast
+  host: HomeCast
+  disk_quota: 1024M
+  services:
+  - HomeCast-cloudantNoSQLDB
+  - availability-monitoring-auto
