@@ -9,6 +9,8 @@ body,html {
 	margin: 0 auto;
 	font-family: Lato,sans-serif;
 	color: #283D56;
+	background-repeat: no-repeat;
+	background-size: 100%;;
 }
 
 /* header footer common */
@@ -179,3 +181,45 @@ tr:hover .deleteBtn {
 .appinfo {
 	padding: 10px;
 }
+
+
+.dashboard {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	padding: 10px;
+}
+.add {
+	position: fixed;
+	width: 80px;
+	top: 0;
+	right: 0;
+	font-weight: bold;
+	font-size: 80px;
+	cursor: pointer;
+}
+
+.clock > .widget_content {
+	height: inherit;
+	width: inherit;
+	font-weight: bold;
+	font-size: 60px;
+	cursor: pointer;
+	background-color: #333;
+	color: #fff;
+	padding: 10px;
+	text-align: center;
+	overflow: hidden;
+	line-height: 200px;
+}
+
+.widget_content > span {
+	display: inline-block !important;
+	vertical-align: middle;
+	line-height: normal;
+}
+
+.data {
+	display: none;
+}
+

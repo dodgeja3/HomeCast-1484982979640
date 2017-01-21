@@ -15,6 +15,8 @@ var app = express();
 
 var db;
 var users_table;
+var widgets_table;
+var clocks_table;
 
 var cloudant;
 
@@ -28,8 +30,8 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var logger = require('morgan');
 var errorHandler = require('errorhandler');
-//var multipart = require('connect-multiparty')
-//var multipartMiddleware = multipart();
+var multipart = require('connect-multiparty')
+var multipartMiddleware = multipart();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -43,8 +45,8 @@ app.use(bodyParser.urlencoded({
 app.use(session({
     cookieName: 'session',
     secret: '1234567890',
-    duration: 30 * 60 * 1000,
-    activeDuration: 5 * 60 * 1000,
+    duration: 30 * 60 * 100000,
+    activeDuration: 5 * 60 * 100000,
 }));
 app.use(bodyParser.json());
 app.use(methodOverride());
@@ -83,20 +85,23 @@ function initDBConnection() {
 
     cloudant = require('cloudant')(dbCredentials.url);
 
-    // check if DB exists if not create
-    cloudant.db.create(dbCredentials.dbName, function(err, res) {
-        if (err) {
-            console.log('Could not create new db: ' + dbCredentials.dbName + ', it might already exist.');
-        }
+    cloudant.db.destroy('widgets', function (err) {
+        cloudant.db.create("widgets", function (err, res) {
+            if (err) {
+                console.log('Could not create new db: ' + dbCredentials.dbName + ', it might already exist.');
+            }
+        });
     });
 
     db = cloudant.use(dbCredentials.dbName);
     users_table = cloudant.use("users");
+    widgets_table = cloudant.use("widgets");
+    clocks_table = cloudant.use("clock");
 }
 
 initDBConnection();
 
-app.get('/', function(req, res){
+app.get('/', function (req, res) {
     if (req.session.user) {
         console.log(req.session.user);
         res.render('index.html');
@@ -106,29 +111,29 @@ app.get('/', function(req, res){
     }
 });
 
-app.get('/receiver', function(req, res){
+app.get('/receiver', function (req, res) {
     if (req.session.user) {
         console.log(req.session.user);
         res.render('receiver.html');
     }
     else {
-        res.redirect('/signup');
+        res.redirect('/login');
     }
 });
 
-app.get('/signup', function(req, res){
+app.get('/signup', function (req, res) {
     res.render('SignUp.html');
 });
 
-app.get('/login', function(req, res){
+app.get('/login', function (req, res) {
     res.render('login.html');
 });
 
-app.post('/createUser', function(req, res){
-    users_table.insert( {
+app.post('/createUser', function (req, res) {
+    users_table.insert({
         "email": req.body.email,
         "password": req.body.password
-    }, function(err, result) {
+    }, function (err, result) {
         if (err) {
             console.log(err);
             res.sendStatus(500);
@@ -141,21 +146,97 @@ app.post('/createUser', function(req, res){
     });
 });
 
-app.post('/loginUser', function(req, res) {
-    users_table.find({selector:{email: req.body.email}}, function(err, results) {
+app.post('/loginUser', function (req, res) {
+    users_table.find({selector: {email: req.body.email}}, function (err, results) {
         if (!results.docs[0]) {
-            res.render('login.html', { error: 'Invalid email.' });
+            res.render('login.html', {error: 'Invalid email.'});
         } else {
             user = results.docs[0];
             if (req.body.password == user.password) {
                 req.session.user = user;
                 res.redirect('/receiver');
             } else {
-                res.render('login.html', { error: 'Invalid email or password.' });
+                res.render('login.html', {error: 'Invalid email or password.'});
             }
         }
     });
 });
+
+app.get('/api/widgets', function (req, res) {
+    widgets_table.find({selector: {user: req.session.user._id}}, function (err, results) {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(results);
+    });
+});
+
+app.post('/api/add', function (req, res) {
+    widgets_table.insert({
+        "user": req.session.user._id,
+        "x1": req.body.x1,
+        "x2": req.body.x2,
+        "y1": req.body.y1,
+        "y2": req.body.y2,
+        "type": req.body.type,
+        "type_id": req.body.type_id
+    }, function (err, result) {
+        if (err) {
+            console.log(err);
+            res.sendStatus(500);
+        } else {
+            result.email = req.body.email;
+            req.session.user = result;
+            res.send(result);
+        }
+        res.end();
+    });
+});
+
+app.post('/api/drop', function (req, res) {
+    widgets_table.find({selector: {_id: req.body.id}}, function (err, results) {
+        console.log(results.docs[0]);
+        var doc = results.docs[0];
+        doc.x1 = req.body.x1;
+        doc.x2 = req.body.x2;
+        doc.y1 = req.body.y1;
+        doc.y2 = req.body.y2;
+
+        widgets_table.insert(doc, function (err, result) {
+            if (err) {
+                console.log(err);
+                res.sendStatus(500);
+            } else {
+                res.send(result);
+            }
+            res.end();
+        });
+
+        //widgets_table.insert({
+        //
+        //    "_rev": req.body.rev,
+        //    "user": req.session.user._id,
+        //    "x1": req.body.x1,
+        //    "x2": req.body.x2,
+        //    "y1": req.body.y1,
+        //    "y2": req.body.y2,
+        //    "type": req.body.type,
+        //    "type_id": req.body.type_id
+        //}, function (err, result) {
+        //    if (err) {
+        //        console.log(err);
+        //        res.sendStatus(500);
+        //    } else {
+        //        result.email = req.body.email;
+        //        req.session.user = result;
+        //        res.send(result);
+        //    }
+        //    res.end();
+        //});
+    });
+
+
+
+});
+
 
 //
 //function createResponseData(id, name, value, attachments) {
@@ -492,6 +573,6 @@ app.post('/loginUser', function(req, res) {
 //});
 
 
-http.createServer(app).listen(app.get('port'), '0.0.0.0', function() {
+http.createServer(app).listen(app.get('port'), '0.0.0.0', function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
