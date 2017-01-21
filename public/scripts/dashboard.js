@@ -119,6 +119,7 @@ $( document ).ready(function() {
             y2: 200
         }, function( data ) {
             Refresh();
+            UpdateChromecast();
         }, "json");
     });
 
