@@ -5,6 +5,7 @@
 var express = require('express'),
     routes = require('./routes'),
     user = require('./routes/user'),
+    receiver = require('./routes/receiver'),
     http = require('http'),
     path = require('path'),
     fs = require('fs');
@@ -87,6 +88,8 @@ initDBConnection();
 
 app.get('/', routes.index);
 
+app.get('/receiver', routes.receiver);
+
 function createResponseData(id, name, value, attachments) {
 
     var responseData = {
@@ -108,7 +111,6 @@ function createResponseData(id, name, value, attachments) {
     });
     return responseData;
 }
-
 
 var saveDocument = function(id, name, value, response) {
 
