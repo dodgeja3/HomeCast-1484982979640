@@ -13,6 +13,7 @@ $(document).ready(function () {
         //}, "json");
 
         document.getElementById("message").innerHTML=user;
+        document.getElementById("test").innerHTML="Test";
         window.castReceiverManager.setApplicationState(user);
     }
 
