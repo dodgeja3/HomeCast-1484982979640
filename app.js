@@ -8,18 +8,20 @@ var express = require('express'),
     receiver = require('./routes/receiver'),
     http = require('http'),
     path = require('path'),
-    fs = require('fs');
+    fs = require('fs'),
+    session = require('client-sessions');
 
 var app = express();
 
 var db;
+var users_table;
 
 var cloudant;
 
 var fileToUpload;
 
 var dbCredentials = {
-    dbName: 'my_sample_db'
+    dbName: 'widgets'
 };
 
 var bodyParser = require('body-parser');
@@ -37,6 +39,12 @@ app.engine('html', require('ejs').renderFile);
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({
     extended: true
+}));
+app.use(session({
+    cookieName: 'session',
+    secret: '1234567890',
+    duration: 30 * 60 * 1000,
+    activeDuration: 5 * 60 * 1000,
 }));
 app.use(bodyParser.json());
 app.use(methodOverride());
@@ -69,7 +77,8 @@ function initDBConnection() {
         // Alternately you could point to a local database here instead of a
         // Bluemix service.
         // url will be in this format: https://username:password@xxxxxxxxx-bluemix.cloudant.com
-        dbCredentials.url = "REPLACE ME";
+        //dbCredentials.url = "https://zambezi64@gmail.com:Thisistopsecret12!@d12fa842-2701-4087-ac26-099578785674-bluemix.cloudant.com";
+        dbCredentials.url = "https://d12fa842-2701-4087-ac26-099578785674-bluemix:39557617ef9f767de0f05a55588cf460e5594112e9dbe45ed857704548c7681f@d12fa842-2701-4087-ac26-099578785674-bluemix.cloudant.com";
     }
 
     cloudant = require('cloudant')(dbCredentials.url);
@@ -82,14 +91,64 @@ function initDBConnection() {
     });
 
     db = cloudant.use(dbCredentials.dbName);
+    users_table = cloudant.use("users");
 }
 
-//initDBConnection();
+initDBConnection();
 
-app.get('/', routes.index);
+app.get('/', function(req, res){
+    if (req.session.user) {
+        console.log(req.session.user);
+        res.render('index.html');
+    }
+    else {
+        res.redirect('/signup');
+    }
+});
 
 app.get('/receiver', function(req, res){
     res.render('receiver.html');
+});
+
+app.get('/signup', function(req, res){
+    res.render('SignUp.html');
+});
+
+app.get('/login', function(req, res){
+    res.render('login.html');
+});
+
+app.post('/createUser', function(req, res){
+    users_table.insert( {
+        "email": req.body.email,
+        "password": req.body.password
+    }, function(err, result) {
+        if (err) {
+            console.log(err);
+            res.sendStatus(500);
+        } else {
+            result.email = req.body.email;
+            req.session.user = result;
+            res.redirect('/');
+        }
+        res.end();
+    });
+});
+
+app.post('/loginUser', function(req, res) {
+    users_table.find({selector:{email: req.body.email}}, function(err, results) {
+        if (!results.docs[0]) {
+            res.render('login.html', { error: 'Invalid email.' });
+        } else {
+            user = results.docs[0];
+            if (req.body.password == user.password) {
+                req.session.user = user;
+                res.redirect('/');
+            } else {
+                res.render('login.html', { error: 'Invalid email or password.' });
+            }
+        }
+    });
 });
 
 //
