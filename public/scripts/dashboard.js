@@ -1,4 +1,6 @@
 $( document ).ready(function() {
+    UpdateChromecast();
+
     // Start clock
     var interval = setInterval(function() {
         var momentNow = moment();

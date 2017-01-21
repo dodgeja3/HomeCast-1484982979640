@@ -1,8 +1,5 @@
 $(document).ready(function () {
-    $.get( "/api/session", function( data ) {
-        console.log(data);
-        android.update(JSON.stringify(data));
-    });
+
 
     //console.log("HA!")
     // utility function to display the text message in the input field
