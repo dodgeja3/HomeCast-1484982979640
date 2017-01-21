@@ -126,11 +126,11 @@ $(document).ready(function () {
     });
 
     function ValidateChromecast() {
-        if (android != undefined) {
+       // if (android != undefined) {
             $.get("/api/session", function (data) {
                 android.login(JSON.stringify(data));
             });
-        }
+        //}
         else {
 
         }
