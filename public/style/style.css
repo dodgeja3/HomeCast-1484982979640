@@ -185,7 +185,7 @@ tr:hover .deleteBtn {
 
 .dashboard {
 	position: absolute;
-	height: 100%;
+	/*height: 100%;*/
 	width: 100%;
 	padding: 10px;
 }
@@ -223,3 +223,6 @@ tr:hover .deleteBtn {
 	display: none;
 }
 
+.widget {
+	position: absolute;
+}

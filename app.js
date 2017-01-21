@@ -112,7 +112,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/receiver', function (req, res) {
-    if (req.session.user) {
+    if (req.session.user.email) {
         console.log(req.session.user);
         res.render('receiver.html');
     }
@@ -183,8 +183,8 @@ app.post('/api/add', function (req, res) {
             console.log(err);
             res.sendStatus(500);
         } else {
-            result.email = req.body.email;
-            req.session.user = result;
+            //result.email = req.body.email;
+            //req.session.user = result;
             res.send(result);
         }
         res.end();
@@ -232,11 +232,13 @@ app.post('/api/drop', function (req, res) {
         //    res.end();
         //});
     });
-
-
-
 });
 
+app.get('/api/session', function (req, res) {
+    console.log(req.session.user);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(req.session.user);
+});
 
 //
 //function createResponseData(id, name, value, attachments) {

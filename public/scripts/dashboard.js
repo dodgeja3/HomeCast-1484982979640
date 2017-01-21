@@ -12,6 +12,8 @@ $( document ).ready(function() {
         );
     }, 100);
 
+    $(".dashboard").height($(window).height());
+
     var hack = ["31946589405_deb63e02d6_o.jpg", "32260740536_2866cf4065_o.jpg", "bli_grc.jpg", "peggyw_spacewalk.jpg",
         "pia13078.jpg", "pia14454.jpg", "pia20516-1041.jpg", "pia21056-1041.jpg", "pia21263.jpg", "pia21376d.jpg"];
     $('body').css("background-image", "url(/images/pictures/" + hack[0] + ")");
@@ -20,7 +22,7 @@ $( document ).ready(function() {
         $('body').css("background-image", "url(/images/pictures/" + hack[i] + ")");
         if (i < 9) i++;
         else i = 0;
-    }, 10000);
+    }, 20000);
 
     // Load widgets
     var Refresh = function() {
@@ -41,7 +43,37 @@ $( document ).ready(function() {
                 widget.width((doc.x2 - doc.x1));
                 widget.css( "left", doc.x1 + "px" );
                 widget.css( "top", doc.y1 + "px" );
-                $(".widget_content").css("line-height", (widget.height() - 50) + "px");
+                $("#" + doc._id + " > .widget_content").css("line-height", (widget.height() - 50) + "px");
+
+                widget.resizable({
+                    grid: [ 25, 25 ],
+                    start: function(event, ui){
+                    },
+                    resize: function(event, ui){
+                        $("#" + doc._id + " > .widget_content").css("line-height", (widget.height() - 50) + "px");
+                    },
+                    stop: function(event, ui){
+                        var x1 = ui.position.left;
+                        var x2 = x1 + ui.size.width;
+                        var y1 = ui.position.top;
+                        var y2 = y1 + ui.size.height;
+
+                        $.post( "/api/drop", {
+                            rev: $(this).find('.rev').html(),
+                            id: $(this).attr('id'),
+                            type: $(this).find('.type').html(),
+                            type_id: $(this).find('.type_id').html(),
+                            x1: x1,
+                            x2: x2,
+                            y1: y1,
+                            y2: y2
+                        }, function( data ) {
+                            // Refresh Chromecast!!!!
+                            UpdateChromecast();
+                            $(this).find('.rev').html(data.rev)
+                        }, "json");
+                    }
+                });
             });
 
 
@@ -63,39 +95,14 @@ $( document ).ready(function() {
                         y1: y1,
                         y2: y2
                     }, function( data ) {
+                        // Refresh Chromecast!!!!
+                        UpdateChromecast();
                         $(this).find('.rev').html(data.rev)
                     }, "json");
                 }
             });
 
-            $( ".widget" ).resizable({
-                grid: [ 25, 25 ],
-                start: function(event, ui){
 
-                },
-                resize: function(event, ui){
-                    $(".widget_content").css("line-height", ($( ".widget" ).height() - 50) + "px");
-                },
-                stop: function(event, ui){
-                    var x1 = ui.position.left;
-                    var x2 = x1 + ui.size.width;
-                    var y1 = ui.position.top;
-                    var y2 = y1 + ui.size.height;
-
-                    $.post( "/api/drop", {
-                        rev: $(this).find('.rev').html(),
-                        id: $(this).attr('id'),
-                        type: $(this).find('.type').html(),
-                        type_id: $(this).find('.type_id').html(),
-                        x1: x1,
-                        x2: x2,
-                        y1: y1,
-                        y2: y2
-                    }, function( data ) {
-                        $(this).find('.rev').html(data.rev)
-                    }, "json");
-                }
-            });
         });
     };
 
@@ -113,6 +120,13 @@ $( document ).ready(function() {
         }, function( data ) {
             Refresh();
         }, "json");
-    })
+    });
+
+    function UpdateChromecast() {
+        $.get( "/api/session", function( data ) {
+            console.log(data);
+            android.update(data);
+        });
+    }
 
 });
