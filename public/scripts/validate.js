@@ -1,18 +1,18 @@
 $(document).ready(function () {
     // utility function to display the text message in the input field
-    function login(user) {
-        var u = JSON.parse(user);
-        $.post( "/loginUser", {
-            email: u.email,
-            password: u.password
-        }, function( data ) {
-            if (data.email) {
-                window.location.href = "/receiver";
-            }
-        }, "json");
+    function process_message(message) {
+        //var u = JSON.parse(user);
+        //$.post( "/loginUser", {
+        //    email: u.email,
+        //    password: u.password
+        //}, function( data ) {
+        //    if (data.email) {
+        //        window.location.href = "/receiver";
+        //    }
+        //}, "json");
 
-        document.getElementById("message").innerHTML=user;
-        window.castReceiverManager.setApplicationState(user);
+        document.getElementById("message").innerHTML=message;
+        window.castReceiverManager.setApplicationState(message);
     }
 
 
@@ -49,7 +49,7 @@ $(document).ready(function () {
     window.messageBus.onMessage = function (event) {
         console.log('Message [' + event.senderId + ']: ' + event.data);
         // display the message from the sender
-        login(event.data);
+        process_message(event.data);
         // inform all senders on the CastMessageBus of the incoming message event
         // sender message listener will be invoked
         window.messageBus.send(event.senderId, event.data);
