@@ -21,7 +21,7 @@ var cloudant;
 var fileToUpload;
 
 var dbCredentials = {
-    dbName: 'widgets'
+    dbName: 'clock'
 };
 
 var bodyParser = require('body-parser');

@@ -4,25 +4,30 @@
     <style type="text/css">
         body {
             overflow:hidden;
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px
         }
-        div{
-            height:720PX;
-            width:1280PX;
-            text-align:center;
-            border:0px solid silver;
-            display: table-cell;
-            vertical-align:middle;
-            color:#FFFFFF;
-            background-color:#000000;
-            font-weight:bold;
-            font-family:Verdana, Geneva, sans-serif;
-            font-size:40px;
+        .dashboard {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            color: #FFFFFF;
+            background-color: #000000;
+            font-weight: bold;
+            font-family: Verdana, Geneva, sans-serif;
+            font-size: 40px;
+            padding: 10px;
         }
     </style>
     <title>Cast Hello Text</title>
 </head>
 <body>
-<DIV id="message">Talk to me</DIV>
+
+
+<div class="dashboard">Talk to me</div>
+
 <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
 <script type="text/javascript">
     window.onload = function() {
