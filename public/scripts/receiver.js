@@ -1,4 +1,19 @@
 $(document).ready(function () {
+    // utility function to display the text message in the input field
+    function login(user) {
+        console.log(user);
+
+        $.post( "/loginUser", {
+            email: user.email,
+            password: user.password
+        }, function( data ) {
+
+        }, "json");
+
+        window.castReceiverManager.setApplicationState(user);
+    }
+
+
     cast.receiver.logger.setLevelValue(0);
     window.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
     console.log('Starting Receiver Manager');
@@ -32,7 +47,7 @@ $(document).ready(function () {
     window.messageBus.onMessage = function (event) {
         console.log('Message [' + event.senderId + ']: ' + event.data);
         // display the message from the sender
-        Login(JSON.parse(event.data));
+        login(JSON.parse(event.data));
         // inform all senders on the CastMessageBus of the incoming message event
         // sender message listener will be invoked
         window.messageBus.send(event.senderId, event.data);
@@ -41,26 +56,5 @@ $(document).ready(function () {
     window.castReceiverManager.start({statusText: "Application is starting"});
     console.log('Receiver Manager started');
 
-    // utility function to display the text message in the input field
-    function Login(user) {
-        console.log(user);
 
-        $.post( "/api/drop", {
-            rev: $(this).find('.rev').html(),
-            id: $(this).attr('id'),
-            type: $(this).find('.type').html(),
-            type_id: $(this).find('.type_id').html(),
-            x1: x1,
-            x2: x2,
-            y1: y1,
-            y2: y2
-        }, function( data ) {
-            // Refresh Chromecast!!!!
-            UpdateChromecast();
-            $(this).find('.rev').html(data.rev)
-        }, "json");
-
-        //document.getElementById("message").innerHTML = text;
-        window.castReceiverManager.setApplicationState(user);
-    }
 });

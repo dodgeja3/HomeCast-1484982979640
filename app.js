@@ -152,6 +152,7 @@ app.post('/loginUser', function (req, res) {
             res.render('login.html', {error: 'Invalid email.'});
         } else {
             user = results.docs[0];
+            console.log(user);
             if (req.body.password == user.password) {
                 req.session.user = user;
                 res.redirect('/receiver');
