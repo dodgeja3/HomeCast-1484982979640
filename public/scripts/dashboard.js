@@ -126,7 +126,7 @@ $( document ).ready(function() {
     });
 
     function ValidateChromecast() {
-        if (andoid) {
+        if (android) {
             $.get( "/api/session", function( data ) {
                 android.login(JSON.stringify(data));
             });

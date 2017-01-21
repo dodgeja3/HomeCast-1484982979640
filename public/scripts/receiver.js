@@ -1,7 +1,10 @@
 $(document).ready(function () {
     // utility function to display the text message in the input field
     function process(message) {
-        $(".test").html(message);
+        document.getElementById("test").innerHTML=message;
+        window.castReceiverManager.setApplicationState(user);
+
+        //$(".test").html(message);
         message = JSON.parse(message);
         if (message.action == "update") {
             location.reload();
@@ -50,6 +53,4 @@ $(document).ready(function () {
     // initialize the CastReceiverManager with an application status message
     window.castReceiverManager.start({statusText: "Application is starting"});
     console.log('Receiver Manager started');
-
-
 });
