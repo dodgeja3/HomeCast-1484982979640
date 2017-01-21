@@ -226,3 +226,7 @@ tr:hover .deleteBtn {
 .widget {
 	position: absolute;
 }
+
+.frame {
+	width: 100%;
+}

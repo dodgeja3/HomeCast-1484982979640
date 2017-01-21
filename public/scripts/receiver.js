@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    $(".frame").height($(window).height());
+    //$(".frame").width("100%");
+
     // utility function to display the text message in the input field
     function process(message) {
         document.getElementById("test").innerHTML=message;

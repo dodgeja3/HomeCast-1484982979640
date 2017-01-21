@@ -113,15 +113,15 @@ app.get('/', function (req, res) {
 
 app.get('/receiver', function (req, res) {
     //res.render('receiver.html');
-    res.setHeader('Content-Type', 'application/json');
+    //res.setHeader('Content-Type', 'application/json');
     if (req.session.user) {
         console.log(req.session.user);
-        //res.render('receiver.html');
-        res.send(req.session.user);
+        res.render('receiver.html');
+        //res.send(req.session.user);
     }
     else {
-        //res.redirect('/login');
-        res.send(false);
+        res.redirect('/login');
+        //res.send(false);
     }
 });
 
@@ -152,7 +152,7 @@ app.post('/createUser', function (req, res) {
         } else {
             result.email = req.body.email;
             req.session.user = result;
-            res.redirect('/receiver');
+            res.redirect('/main');
         }
         res.end();
     });
