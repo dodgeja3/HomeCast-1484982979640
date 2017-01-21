@@ -1,6 +1,7 @@
 $(document).ready(function () {
     // utility function to display the text message in the input field
     function process(message) {
+        $(".test").html(message);
         message = JSON.parse(message);
         if (message.action == "update") {
             location.reload();

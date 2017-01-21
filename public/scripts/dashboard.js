@@ -126,9 +126,11 @@ $( document ).ready(function() {
     });
 
     function ValidateChromecast() {
-        $.get( "/api/session", function( data ) {
-            android.login(JSON.stringify(data));
-        });
+        if (andoid) {
+            $.get( "/api/session", function( data ) {
+                android.login(JSON.stringify(data));
+            });
+        }
     }
 
     function UpdateChromecast() {
