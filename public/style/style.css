@@ -231,3 +231,9 @@ tr:hover .deleteBtn {
 .widget {
 	position: absolute;
 }
+
+.widgetList {
+	position: relative;
+	right: 315px;
+	list-style-type: none;
+}

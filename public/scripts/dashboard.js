@@ -119,7 +119,21 @@ $( document ).ready(function() {
     // Initial load
     Refresh();
 
-    $(".add").click(function() {
+
+    // $(".add").click(function() {
+    //     $.post( "/api/add", {
+    //         type: "clock",
+    //         type_id: "123",
+    //         x1: 0,
+    //         x2: .3,
+    //         y1: 0,
+    //         y2: .2
+    //     }, function( data ) {
+    //         UpdateChromecast();
+    //         Refresh();
+    //     }, "json");
+    // });
+    $(".clock").click(function() {
         $.post( "/api/add", {
             type: "weather",
             type_id: "123",
@@ -133,8 +147,15 @@ $( document ).ready(function() {
         }, "json");
     });
 
+    $(".widgetList").hide();
+
+    $(".plus").click(function() {
+        $(".widgetList").toggle();
+    });
+
+
     function UpdateChromecast() {
-        android.update();
+        //android.update();
     }
 
 });
