@@ -10,7 +10,12 @@ body,html {
 	font-family: Lato,sans-serif;
 	color: #283D56;
 	background-repeat: no-repeat;
-	background-size: 100%;;
+	background-size: 100%;
+	overflow-x: hidden;
+}
+
+body {
+	position: relative
 }
 
 /* header footer common */
