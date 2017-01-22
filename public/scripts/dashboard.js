@@ -10,7 +10,33 @@ $( document ).ready(function() {
                 momentNow.format('MMMM DD, YYYY ') +
             "</span>"
         );
-    }, 100);
+    }, 1000);
+
+    var interval = setInterval(function() {
+        var sourcesUrl = "https://newsapi.org/v1/sources?language=en";
+        var articlesUrl = "https://newsapi.org/v1/articles?source=";
+
+        $.getJSON(sourcesUrl).then(function(sources) {
+            console.log(sources);
+            if(sources.status == 'ok') {
+                console.log(sources.sources.length);
+                var articleSource = sources.sources[Math.floor(Math.random() * (sources.sources.length+1))];
+                console.log(articleSource);
+                $.getJSON(articlesUrl + articleSource.id + "&sortBy=" + articleSource.sortBysAvailable[0] + "&apiKey=e636cc3f53c64bfc878a77058e8e2a80").then(function(articles) {
+                    console.log(articles);
+                    $('.news > .widget_content').html(
+                        "<span><h1>"+articles.articles[0].title+"</h1><BR />"+articles.articles[0].description+"</span>"
+                    );
+                    UpdateChromecast();
+                });
+            } else {
+                $('.news > .widget_content').html(
+                    "<span>" + "Could not connect to News API" + "</span>"
+                );
+            }
+        });
+    }, 10000);
+
 
 
 
@@ -67,7 +93,7 @@ $( document ).ready(function() {
                             console.log( dataNow );
                             console.log( data5Day );
 
-                            var description = "<![CDATA[<BR />\n<b>Current Conditions : "+dataNow.name+"</b>\n<BR />" + Math.round((9.0 / 5.0) * (dataNow.main.temp - 273.15) + 32) + " - " + dataNow.weather[0].main + "\n<BR />\n \
+                            var description = "<BR />\n<b>Current Conditions : "+dataNow.name+"</b>\n<BR />" + Math.round((9.0 / 5.0) * (dataNow.main.temp - 273.15) + 32) + " - " + dataNow.weather[0].main + "\n<BR />\n \
                             <BR />\n<b>Forecast:</b>\n";
 
                             for(var i = 0; i < 5; i++) {
@@ -82,6 +108,12 @@ $( document ).ready(function() {
                         });
                     });
                 }
+
+                // if(doc.type == "news") {
+                    
+
+                    
+                // }
 
                 if (doc.type == "text") {
                     $('.text > .widget_content').html(
@@ -216,6 +248,22 @@ $( document ).ready(function() {
     $(".calendar").click(function() {
         $.post( "/api/add", {
             type: "calendar",
+            type_id: "123",
+            x1: (0).toString(),
+            x2: (.3).toString(),
+            y1: (0).toString(),
+            y2: (.3).toString()
+        }, function( data ) {
+            UpdateChromecast();
+            Refresh();
+        }, "json");
+
+        $(".widgetList").hide();
+    });
+
+    $(".news").click(function() {
+        $.post( "/api/add", {
+            type: "news",
             type_id: "123",
             x1: (0).toString(),
             x2: (.3).toString(),
