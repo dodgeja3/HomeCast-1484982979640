@@ -93,6 +93,9 @@ $( document ).ready(function() {
 
 
             $( ".widget" ).draggable({
+                // start: function(event, ui) {
+                //     clearTimeout(pressTimer);
+                // },
                 containment: "parent",
                 stop: function(event, ui){
                     var x1 = ui.position.left / $(window).width();
@@ -125,20 +128,7 @@ $( document ).ready(function() {
     Refresh();
 
 
-    // $(".add").click(function() {
-    //     $.post( "/api/add", {
-    //         type: "clock",
-    //         type_id: "123",
-    //         x1: 0,
-    //         x2: .3,
-    //         y1: 0,
-    //         y2: .2
-    //     }, function( data ) {
-    //         UpdateChromecast();
-    //         Refresh();
-    //     }, "json");
-    // });
-    $(".clock").click(function() {
+    $(".clock_button").click(function() {
         $.post( "/api/add", {
             type: "clock",
             type_id: "123",
@@ -150,9 +140,11 @@ $( document ).ready(function() {
             UpdateChromecast();
             Refresh();
         }, "json");
+
+        $(".widgetList").hide();
     });
 
-    $(".weather").click(function() {
+    $(".weather_button").click(function() {
         $.post( "/api/add", {
             type: "weather",
             type_id: "123",
@@ -164,6 +156,24 @@ $( document ).ready(function() {
             UpdateChromecast();
             Refresh();
         }, "json");
+
+        $(".widgetList").hide();
+    });
+
+    $(".text_button").click(function() {
+        $.post( "/api/add", {
+            type: "text",
+            type_id: "123",
+            x1: (0).toString(),
+            x2: (.3).toString(),
+            y1: (0).toString(),
+            y2: (.3).toString()
+        }, function( data ) {
+            UpdateChromecast();
+            Refresh();
+        }, "json");
+
+        $(".widgetList").hide();
     });
 
     $(".widgetList").hide();
@@ -171,6 +181,18 @@ $( document ).ready(function() {
     $(".plus").click(function() {
         $(".widgetList").toggle();
     });
+
+
+
+    // $(".widget").mouseup(function(){
+    //     clearTimeout(pressTimer);
+    //     // Clear timeout
+    //     return false;
+    // }).mousedown(function(){
+    //     // Set timeout
+    //     pressTimer = window.setTimeout(function() {$(this).remove()},1000);
+    //     return false;
+    // });
 
 
     function UpdateChromecast() {
