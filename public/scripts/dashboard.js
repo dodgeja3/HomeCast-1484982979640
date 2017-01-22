@@ -223,7 +223,7 @@ $( document ).ready(function() {
 
 
     function UpdateChromecast() {
-        //android.update();
+        android.update();
     }
 
 });
