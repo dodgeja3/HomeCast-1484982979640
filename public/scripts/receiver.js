@@ -30,24 +30,28 @@ $(document).ready(function () {
                     );
 
                     if (doc.type == "weather") {
-                        var url = "http://api.openweathermap.org/data/2.5/weather?q=EastLansing,MI&appid=269cf0387e2d75cb2d84effa38819bd2"
+                        var urlNow = "http://api.openweathermap.org/data/2.5/weather?q=EastLansing,MI&appid=269cf0387e2d75cb2d84effa38819bd2"
+                        var url5Day = "http://api.openweathermap.org/data/2.5/forecast/daily?q=EastLansing,MI&count=5&appid=269cf0387e2d75cb2d84effa38819bd2"
 
-                        $.getJSON(url).then(function(data) {
-                            console.log(data);
+                        $.getJSON(urlNow).then(function(dataNow) {
+                            $.getJSON(url5Day).then(function(data5Day) {
+                                console.log( dataNow );
+                                console.log( data5Day );
+
+                                var description = "<![CDATA[<BR />\n<b>Current Conditions : "+dataNow.name+"</b>\n<BR />" + Math.round((9.0 / 5.0) * (dataNow.main.temp - 273.15) + 32) + " - " + dataNow.weather[0].main + "\n<BR />\n \
+                                <BR />\n<b>Forecast:</b>\n";
+
+                                for(var i = 0; i < 5; i++) {
+                                    description += "<BR /> "+new Date(data5Day.list[i].dt * 1000).toString().split(' ')[0]+" : "+data5Day.list[i].weather[0].main+" - High: "+Math.round((9.0 / 5.0) * (data5Day.list[i].temp.max - 273.15) + 32)+" Low: "+Math.round((9.0 / 5.0) * (data5Day.list[i].temp.max - 273.15) + 32)+"\n";
+                                }
+                                description += "\n \<BR />";
+
+
+                                $('.weather > .widget_content').html(
+                                    "<span>" + description + "</span>"
+                                );
+                            });
                         });
-
-                        var description = "<![CDATA[<img src=\"http://l.yimg.com/a/i/us/we/52/29.gif\"/>\n<BR />\n<b>Current Conditions:</b>\n<BR />Partly Cloudy\n<BR />\n<BR />\n<b>Forecast:</b>\n<BR /> Sat - Partly Cloudy. High: 55Low: 40\n<BR /> Sun - Cloudy. High: 48Low: 40\n<BR /> Mon - Cloudy. High: 43Low: 38\n<BR /> Tue - Mostly Cloudy. High: 42Low: 33\n<BR /> Wed - Rain. High: 42Low: 37\n<BR />\n<BR />\n<a href=\"http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-2436453/\">Full Forecast at Yahoo! Weather</a>\n<BR />\n<BR />\n(provided by <a href=\"http://www.weather.com\" >The Weather Channel</a>)\n<BR />\n]]>";
-                        $('.weather > .widget_content').html(
-                            "<span>" + description + "</span>"
-                        );
-
-                        //$.get( "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22lansing%2C%20mi%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys", function( data ) {
-                        //    //var description = data.query.results.channel.item.description;
-                        //    var description = "<![CDATA[<img src=\"http://l.yimg.com/a/i/us/we/52/29.gif\"/>\n<BR />\n<b>Current Conditions:</b>\n<BR />Partly Cloudy\n<BR />\n<BR />\n<b>Forecast:</b>\n<BR /> Sat - Partly Cloudy. High: 55Low: 40\n<BR /> Sun - Cloudy. High: 48Low: 40\n<BR /> Mon - Cloudy. High: 43Low: 38\n<BR /> Tue - Mostly Cloudy. High: 42Low: 33\n<BR /> Wed - Rain. High: 42Low: 37\n<BR />\n<BR />\n<a href=\"http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-2436453/\">Full Forecast at Yahoo! Weather</a>\n<BR />\n<BR />\n(provided by <a href=\"http://www.weather.com\" >The Weather Channel</a>)\n<BR />\n]]>";
-                        //    $('.weather > .widget_content').html(
-                        //        "<span>" + description + "</span>"
-                        //    );
-                        //});
                     }
 
                     if (doc.type == "text" && json.text) {

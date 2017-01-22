@@ -73,7 +73,7 @@ $( document ).ready(function() {
                             for(var i = 0; i < 5; i++) {
                                 description += "<BR /> "+new Date(data5Day.list[i].dt * 1000).toString().split(' ')[0]+" : "+data5Day.list[i].weather[0].main+" - High: "+Math.round((9.0 / 5.0) * (data5Day.list[i].temp.max - 273.15) + 32)+" Low: "+Math.round((9.0 / 5.0) * (data5Day.list[i].temp.max - 273.15) + 32)+"\n";
                             }
-                            description += "<BR />\n \<BR ";
+                            description += "\n\<BR />";
 
 
                             $('.weather > .widget_content').html(
