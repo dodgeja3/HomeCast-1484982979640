@@ -62,7 +62,7 @@ $(document).ready(function () {
 
                     if (doc.type == "twitter") {
                         $('.twitter > .widget_content').html(
-                            "<a class='twitter-timeline' href='https://twitter.com/Speceottar'>Tweets by Speceottar</a> <script async src='//platform.twitter.com/widgets.js' charset='utf-8'></script>"
+                            "<a class=\"twitter-timeline\" data-width=\"220\" data-height=\"200\" href=\"https://twitter.com/Speceottar\">Tweets by Speceottar</a> <script async src=\"//platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>"
                         );
                     }
 

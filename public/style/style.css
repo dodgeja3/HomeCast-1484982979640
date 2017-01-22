@@ -304,6 +304,16 @@ div.add ul.widgetList a {
 	line-height: 200px;
 }
 
+.video > .widget_content {
+	height: 100%;
+	width: 100%;
+	cursor: pointer;
+	background: rgba(169,169,169, 0.4);
+	padding: 10px;
+	overflow: hidden;
+	line-height: 200px;
+}
+
 .twitter {
 	cursor: pointer;
 	background: rgba(169,169,169, 0.4);
