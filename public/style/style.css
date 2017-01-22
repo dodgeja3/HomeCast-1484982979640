@@ -9,8 +9,6 @@ body,html {
 	margin: 0 auto;
 	font-family: Lato,sans-serif;
 	color: #283D56;
-	background-repeat: no-repeat;
-	background-size: 100%;
 	overflow-x: hidden;
 }
 
@@ -143,6 +141,14 @@ tr:hover .deleteBtn {
 	border-right: 1px solid #fff;
 }
 
+.plus {
+	color: red;
+}
+
+div.add a {
+	color:red;
+}
+
 .errorMsg {
 	color: red;
 	font-weight:normal;
@@ -199,6 +205,8 @@ tr:hover .deleteBtn {
 	transition: background 2s;
 	width: 100%;
 	height: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 .add {
 	position: fixed;
@@ -249,11 +257,12 @@ tr:hover .deleteBtn {
 }
 
 .widgetList > li {
-	height: 35px;
+	height: 45px;
 }
 
 div.add ul.widgetList a {
     font-size: 30px;
+	color: red;
 }
 
 .weather > .widget_content {
@@ -299,6 +308,7 @@ div.add ul.widgetList a {
 	cursor: pointer;
 	background: rgba(169,169,169, 0.4);
 	padding: 10px;
+	height: 200px;
 }
 
 .calendar > .widget_content {

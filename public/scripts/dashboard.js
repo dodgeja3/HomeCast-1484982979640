@@ -27,7 +27,7 @@ $( document ).ready(function() {
                     $('.news > .widget_content').html(
                         "<span><h1>"+articles.articles[0].title+"</h1><BR />"+articles.articles[0].description+"</span>"
                     );
-                    UpdateChromecast();
+                    // UpdateChromecast();
                 });
             } else {
                 $('.news > .widget_content').html(
