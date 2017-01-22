@@ -38,6 +38,15 @@ $( document ).ready(function() {
                     "</div>"
                 );
 
+                if (doc.type == "weather") {
+                    $.get( "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22lansing%2C%20mi%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys", function( data ) {
+                        var description = data.query.results.channel.item.description;
+                        $('.weather > .widget_content').html(
+                            "<span>" + description + "</span>"
+                        );
+                    });
+                }
+
                 var widget = $("#" + doc._id);
                 widget.css("height", ((doc.y2 - doc.y1)*100) + "%");
                 widget.css("width", ((doc.x2 - doc.x1)*100) + "%");
@@ -46,7 +55,7 @@ $( document ).ready(function() {
                 //$("#" + doc._id + " > .widget_content").css("line-height", (widget.height() - 50) + "px");
 
                 widget.resizable({
-                    grid: [ 25, 25 ],
+                    //grid: [ 25, 25 ],
                     start: function(event, ui){
                     },
                     resize: function(event, ui){
@@ -78,7 +87,8 @@ $( document ).ready(function() {
 
 
             $( ".widget" ).draggable({
-                //grid: [ 25, 25 ],
+                containment: "parent",
+                iframeFix: true,
                 stop: function(event, ui){
                     var x1 = ui.position.left / $(window).width();
                     var x2 = (x1 + $(this).width()) / $(window).width();
@@ -102,9 +112,7 @@ $( document ).ready(function() {
                 }
             });
 
-            $('body>div').bind("dragstart", function(event, ui){
-                event.stopPropagation();
-            });
+
         });
     };
 
@@ -113,7 +121,7 @@ $( document ).ready(function() {
 
     $(".add").click(function() {
         $.post( "/api/add", {
-            type: "clock",
+            type: "weather",
             type_id: "123",
             x1: 0,
             x2: .3,
