@@ -39,13 +39,11 @@ $( document ).ready(function() {
                 );
 
                 var widget = $("#" + doc._id);
-                //widget.height((doc.y2 - doc.y1));
-                //widget.width((doc.x2 - doc.x1));
-                widget.css("height", (((doc.y2 - doc.y1)/$(window).height())*100) + "%");
-                widget.css("width", (((doc.x2 - doc.x1)/$(window).width())*100) + "%");
-                widget.css( "left", (((doc.x1 / $(window).width()))*100) + "%" );
-                widget.css( "top", (((doc.y1 / $(window).height()))*100) + "%" );
-                $("#" + doc._id + " > .widget_content").css("line-height", (widget.height() - 50) + "px");
+                widget.css("height", ((doc.y2 - doc.y1)*100) + "%");
+                widget.css("width", ((doc.x2 - doc.x1)*100) + "%");
+                widget.css( "left", (doc.x1*100) + "%");
+                widget.css( "top", (doc.y*100) + "%");
+                //$("#" + doc._id + " > .widget_content").css("line-height", (widget.height() - 50) + "px");
 
                 widget.resizable({
                     grid: [ 25, 25 ],
@@ -55,10 +53,10 @@ $( document ).ready(function() {
                         $("#" + doc._id + " > .widget_content").css("line-height", (widget.height() - 50) + "px");
                     },
                     stop: function(event, ui){
-                        var x1 = ui.position.left;
-                        var x2 = x1 + ui.size.width;
-                        var y1 = ui.position.top;
-                        var y2 = y1 + ui.size.height;
+                        var x1 = ui.position.left / $(window).width();
+                        var x2 = (x1 + ui.size.width) / $(window).width();
+                        var y1 = ui.position.top / $(window).height();
+                        var y2 = (y1 + ui.size.height) / $(window).height();
 
                         $.post( "/api/drop", {
                             rev: $(this).find('.rev').html(),
@@ -82,10 +80,10 @@ $( document ).ready(function() {
             $( ".widget" ).draggable({
                 //grid: [ 25, 25 ],
                 stop: function(event, ui){
-                    var x1 = ui.position.left;
-                    var x2 = x1 + $(this).width();
-                    var y1 = ui.position.top;
-                    var y2 = y1 + $(this).height();
+                    var x1 = ui.position.left / $(window).width();
+                    var x2 = (x1 + $(this).width()) / $(window).width();
+                    var y1 = ui.position.top / $(window).height();
+                    var y2 = (y1 + $(this).height()) / $(window).height();
 
                     $.post( "/api/drop", {
                         rev: $(this).find('.rev').html(),
@@ -118,9 +116,9 @@ $( document ).ready(function() {
             type: "clock",
             type_id: "123",
             x1: 0,
-            x2: 400,
+            x2: .3,
             y1: 0,
-            y2: 200
+            y2: .2
         }, function( data ) {
             UpdateChromecast();
             Refresh();

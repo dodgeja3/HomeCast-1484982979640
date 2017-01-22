@@ -31,11 +31,11 @@ $(document).ready(function () {
                     );
 
                     var widget = $("#" + doc._id);
-                    widget.css("height", (((doc.y2 - doc.y1)/$(window).height())*100) + "%");
-                    widget.css("width", (((doc.x2 - doc.x1)/$(window).width())*100) + "%");
-                    widget.css( "left", (((doc.x1 / $(window).width()))*100) + "%" );
-                    widget.css( "top", (((doc.y1 / $(window).height()))*100) + "%" );
-                    $("#" + doc._id + " > .widget_content").css("line-height", (widget.height() - 50) + "px");
+                    widget.css("height", ((doc.y2 - doc.y1)*100) + "%");
+                    widget.css("width", ((doc.x2 - doc.x1)*100) + "%");
+                    widget.css( "left", (doc.x1*100) + "%");
+                    widget.css( "top", (doc.y*100) + "%");
+                    //$("#" + doc._id + " > .widget_content").css("line-height", (widget.height() - 50) + "px");
                 });
             });
         }
