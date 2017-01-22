@@ -66,6 +66,42 @@ $(document).ready(function () {
                         );
                     }
 
+                    if (doc.type == "video") {
+                        $('.video > .widget_content').html(
+                            "<span><div id='player'></div></span>" +
+                            "<script>" +
+                            "var tag = document.createElement('script');" +
+                            "tag.src = 'https://www.youtube.com/iframe_api';" +
+                            "var firstScriptTag = document.getElementsByTagName('script')[0];" +
+                            "firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);" +
+                            "var player;"+
+                            "function onYouTubeIframeAPIReady() {"+
+                            "player = new YT.Player('player', {"+
+                            "height: '150',"+
+                            "width: '250',"+
+                            "videoId: 'M7lc1UVf-VE',"+
+                            "events: {"+
+                            "'onReady': onPlayerReady,"+
+                            "'onStateChange': onPlayerStateChange"+
+                            "}"+
+                            "});"+
+                            "}"+
+                            "function onPlayerReady(event) {"+
+                            "event.target.playVideo();"+
+                            "}"+
+                            "var done = false;"+
+                            "function onPlayerStateChange(event) {"+
+                            "if (event.data == YT.PlayerState.PLAYING && !done) {"+
+                            "done = true;"+
+                            "}"+
+                            "}"+
+                            "function stopVideo() {"+
+                            "player.stopVideo();"+
+                            "}"+
+                            "</script>"+
+                            ");")
+                    }
+
                     var widget = $("#" + doc._id);
                     widget.css("height", ((parseFloat(doc.y2) - parseFloat(doc.y1))*100) + "%");
                     widget.css("width", ((parseFloat(doc.x2) - parseFloat(doc.x1))*100) + "%");
