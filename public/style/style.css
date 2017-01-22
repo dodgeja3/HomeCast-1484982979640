@@ -205,8 +205,8 @@ tr:hover .deleteBtn {
 }
 
 .clock > .widget_content {
-	height: inherit;
-	width: inherit;
+	height: 100%;
+	width: 100%;
 	font-weight: bold;
 	font-size: 60px;
 	cursor: pointer;
@@ -239,8 +239,8 @@ tr:hover .deleteBtn {
 }
 
 .weather > .widget_content {
-	height: inherit;
-	width: inherit;
+	height: 100%;
+	width: 100%;
 	font-size: 20px;
 	cursor: pointer;
 	background-color: #333;

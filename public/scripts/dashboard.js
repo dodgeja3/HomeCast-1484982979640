@@ -39,19 +39,25 @@ $( document ).ready(function() {
                 );
 
                 if (doc.type == "weather") {
-                    $.get( "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22lansing%2C%20mi%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys", function( data ) {
-                        var description = data.query.results.channel.item.description;
-                        $('.weather > .widget_content').html(
-                            "<span>" + description + "</span>"
-                        );
-                    });
+                    var description = "<![CDATA[<img src=\"http://l.yimg.com/a/i/us/we/52/29.gif\"/>\n<BR />\n<b>Current Conditions:</b>\n<BR />Partly Cloudy\n<BR />\n<BR />\n<b>Forecast:</b>\n<BR /> Sat - Partly Cloudy. High: 55Low: 40\n<BR /> Sun - Cloudy. High: 48Low: 40\n<BR /> Mon - Cloudy. High: 43Low: 38\n<BR /> Tue - Mostly Cloudy. High: 42Low: 33\n<BR /> Wed - Rain. High: 42Low: 37\n<BR />\n<BR />\n<a href=\"http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-2436453/\">Full Forecast at Yahoo! Weather</a>\n<BR />\n<BR />\n(provided by <a href=\"http://www.weather.com\" >The Weather Channel</a>)\n<BR />\n]]>";
+                    $('.weather > .widget_content').html(
+                        "<span>" + description + "</span>"
+                    );
+
+                    //$.get( "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22lansing%2C%20mi%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys", function( data ) {
+                    //    //var description = data.query.results.channel.item.description;
+                    //    var description = "<![CDATA[<img src=\"http://l.yimg.com/a/i/us/we/52/29.gif\"/>\n<BR />\n<b>Current Conditions:</b>\n<BR />Partly Cloudy\n<BR />\n<BR />\n<b>Forecast:</b>\n<BR /> Sat - Partly Cloudy. High: 55Low: 40\n<BR /> Sun - Cloudy. High: 48Low: 40\n<BR /> Mon - Cloudy. High: 43Low: 38\n<BR /> Tue - Mostly Cloudy. High: 42Low: 33\n<BR /> Wed - Rain. High: 42Low: 37\n<BR />\n<BR />\n<a href=\"http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-2436453/\">Full Forecast at Yahoo! Weather</a>\n<BR />\n<BR />\n(provided by <a href=\"http://www.weather.com\" >The Weather Channel</a>)\n<BR />\n]]>";
+                    //    $('.weather > .widget_content').html(
+                    //        "<span>" + description + "</span>"
+                    //    );
+                    //});
                 }
 
                 var widget = $("#" + doc._id);
-                widget.css("height", ((doc.y2 - doc.y1)*100) + "%");
-                widget.css("width", ((doc.x2 - doc.x1)*100) + "%");
-                widget.css( "left", (doc.x1*100) + "%");
-                widget.css( "top", (doc.y*100) + "%");
+                widget.css("height", ((parseFloat(doc.y2) - parseFloat(doc.y1))*100) + "%");
+                widget.css("width", ((parseFloat(doc.x2) - parseFloat(doc.x1))*100) + "%");
+                widget.css( "left", (parseFloat(doc.x1)*100) + "%");
+                widget.css( "top", (parseFloat(doc.y1)*100) + "%");
                 //$("#" + doc._id + " > .widget_content").css("line-height", (widget.height() - 50) + "px");
 
                 widget.resizable({
@@ -63,19 +69,19 @@ $( document ).ready(function() {
                     },
                     stop: function(event, ui){
                         var x1 = ui.position.left / $(window).width();
-                        var x2 = (x1 + ui.size.width) / $(window).width();
+                        var x2 = x1 + (ui.size.width / $(window).width());
                         var y1 = ui.position.top / $(window).height();
-                        var y2 = (y1 + ui.size.height) / $(window).height();
+                        var y2 = y1 + (ui.size.height / $(window).height());
 
                         $.post( "/api/drop", {
                             rev: $(this).find('.rev').html(),
                             id: $(this).attr('id'),
                             type: $(this).find('.type').html(),
                             type_id: $(this).find('.type_id').html(),
-                            x1: x1,
-                            x2: x2,
-                            y1: y1,
-                            y2: y2
+                            x1: x1.toString(),
+                            x2: x2.toString(),
+                            y1: y1.toString(),
+                            y2: y2.toString()
                         }, function( data ) {
                             // Refresh Chromecast!!!!
                             UpdateChromecast();
@@ -90,19 +96,19 @@ $( document ).ready(function() {
                 containment: "parent",
                 stop: function(event, ui){
                     var x1 = ui.position.left / $(window).width();
-                    var x2 = (x1 + $(this).width()) / $(window).width();
+                    var x2 = x1 + ($(this).width() / $(window).width());
                     var y1 = ui.position.top / $(window).height();
-                    var y2 = (y1 + $(this).height()) / $(window).height();
+                    var y2 = y1 + ($(this).height() / $(window).height());
 
                     $.post( "/api/drop", {
                         rev: $(this).find('.rev').html(),
                         id: $(this).attr('id'),
                         type: $(this).find('.type').html(),
                         type_id: $(this).find('.type_id').html(),
-                        x1: x1,
-                        x2: x2,
-                        y1: y1,
-                        y2: y2
+                        x1: x1.toString(),
+                        x2: x2.toString(),
+                        y1: y1.toString(),
+                        y2: y2.toString()
                     }, function( data ) {
                         // Refresh Chromecast!!!!
                         UpdateChromecast();
@@ -136,10 +142,10 @@ $( document ).ready(function() {
         $.post( "/api/add", {
             type: "clock",
             type_id: "123",
-            x1: 0,
-            x2: .3,
-            y1: 0,
-            y2: .2
+            x1: (0).toString(),
+            x2: (.3).toString(),
+            y1: (0).toString(),
+            y2: (.25).toString()
         }, function( data ) {
             UpdateChromecast();
             Refresh();
@@ -150,10 +156,10 @@ $( document ).ready(function() {
         $.post( "/api/add", {
             type: "weather",
             type_id: "123",
-            x1: 0,
-            x2: .3,
-            y1: 0,
-            y2: .2
+            x1: (0).toString(),
+            x2: (.3).toString(),
+            y1: (0).toString(),
+            y2: (.3).toString()
         }, function( data ) {
             UpdateChromecast();
             Refresh();
