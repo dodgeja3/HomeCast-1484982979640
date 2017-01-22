@@ -13,6 +13,9 @@ $( document ).ready(function() {
         );
     }, 1000);
 
+    var newsTitle = "Loading";
+    var newsDescription = "Loading";
+
     var interval = setInterval(function() {
         var sourcesUrl = "https://newsapi.org/v1/sources?language=en";
         var articlesUrl = "https://newsapi.org/v1/articles?source=";
@@ -25,15 +28,9 @@ $( document ).ready(function() {
                 console.log(articleSource);
                 $.getJSON(articlesUrl + articleSource.id + "&sortBy=" + articleSource.sortBysAvailable[0] + "&apiKey=e636cc3f53c64bfc878a77058e8e2a80").then(function(articles) {
                     console.log(articles);
-                    $('.news > .widget_content').html(
-                        "<span><h1>"+articles.articles[0].title+"</h1><BR />"+articles.articles[0].description+"</span>"
-                    );
-                    UpdateChromecast();
+                    newsTitle = articles.articles[0].title;
+                    newsDescription = articles.articles[0].description;
                 });
-            } else {
-                $('.news > .widget_content').html(
-                    "<span>" + "Could not connect to News API" + "</span>"
-                );
             }
         });
     }, 10000);
@@ -110,11 +107,11 @@ $( document ).ready(function() {
                     });
                 }
 
-                // if(doc.type == "news") {
-                    
-
-                    
-                // }
+                if (doc.type == "news") {
+                    $('.news > .widget_content').html(
+                        "<span><h1>"+newsTitle+"</h1><BR />"+newsDescription+"</span>"
+                    );
+                }
 
                 if (doc.type == "text") {
                     $('.text > .widget_content').html(
@@ -172,7 +169,7 @@ $( document ).ready(function() {
                 //$("#" + doc._id + " > .widget_content").css("line-height", (widget.height() - 50) + "px");
 
                 widget.resizable({
-                    grid: [ 25, 25 ],
+                    grid: [ 15, 15 ],
                     start: function(event, ui){
                     },
                     resize: function(event, ui){
@@ -206,7 +203,7 @@ $( document ).ready(function() {
 
 
             $( ".widget" ).draggable({
-                grid: [25, 25],
+                grid: [15, 15],
                 start: function(event, ui) {
                     $(".trashcan").show();
                 },

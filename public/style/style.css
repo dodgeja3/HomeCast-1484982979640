@@ -207,7 +207,7 @@ div.add a {
 }
 .testclass {
 	background-image: url("/images/pictures/31946589405_deb63e02d6_o.jpg");
-	transition: background 120s;
+	transition: background 2s;
 	width: 100%;
 	height: 100%;
 	background-repeat: no-repeat;

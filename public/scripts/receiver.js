@@ -1,4 +1,31 @@
 $(document).ready(function () {
+
+    var newsTitle = "Loading";
+    var newsDescription = "Loading";
+
+    var interval = setInterval(function() {
+        var sourcesUrl = "https://newsapi.org/v1/sources?language=en";
+        var articlesUrl = "https://newsapi.org/v1/articles?source=";
+
+        $.getJSON(sourcesUrl).then(function(sources) {
+            console.log(sources);
+            if(sources.status == 'ok') {
+                console.log(sources.sources.length);
+                var articleSource = sources.sources[Math.floor(Math.random() * (sources.sources.length+1))];
+                console.log(articleSource);
+                $.getJSON(articlesUrl + articleSource.id + "&sortBy=" + articleSource.sortBysAvailable[0] + "&apiKey=e636cc3f53c64bfc878a77058e8e2a80").then(function(articles) {
+                    console.log(articles);
+                    newsTitle = articles.articles[0].title;
+                    newsDescription = articles.articles[0].description;
+
+                    $('.news > .widget_content').html(
+                        "<span><h1>"+newsTitle+"</h1><BR />"+newsDescription+"</span>"
+                    );
+                });
+            }
+        });
+    }, 10000);
+
     // utility function to display the text message in the input field
     function process(message) {
         // document.getElementById("test").innerHTML=message;
@@ -52,6 +79,12 @@ $(document).ready(function () {
                                 );
                             });
                         });
+                    }
+
+                    if (doc.type == "news") {
+                        $('.news > .widget_content').html(
+                            "<span><h1>"+newsTitle+"</h1><BR />"+newsDescription+"</span>"
+                        );
                     }
 
                     if (doc.type == "text" && json.text) {
