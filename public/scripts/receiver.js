@@ -60,6 +60,12 @@ $(document).ready(function () {
                         );
                     }
 
+                    if (doc.type == "twitter") {
+                        $('.twitter > .widget_content').html(
+                            "<a class='twitter-timeline' href='https://twitter.com/Speceottar'>Tweets by Speceottar</a> <script async src='//platform.twitter.com/widgets.js' charset='utf-8'></script>"
+                        );
+                    }
+
                     var widget = $("#" + doc._id);
                     widget.css("height", ((parseFloat(doc.y2) - parseFloat(doc.y1))*100) + "%");
                     widget.css("width", ((parseFloat(doc.x2) - parseFloat(doc.x1))*100) + "%");

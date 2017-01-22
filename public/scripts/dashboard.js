@@ -121,6 +121,12 @@ $( document ).ready(function() {
                     );
                 }
 
+                if (doc.type == "twitter") {
+                    $('.twitter > .widget_content').html(
+                        "<a class=\"twitter-timeline\" data-width=\"220\" data-height=\"200\" href=\"https://twitter.com/Speceottar\">Tweets by Speceottar</a> <script async src=\"//platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>"
+                    );
+                }
+
                 var widget = $("#" + doc._id);
                 widget.css("height", ((parseFloat(doc.y2) - parseFloat(doc.y1))*100) + "%");
                 widget.css("width", ((parseFloat(doc.x2) - parseFloat(doc.x1))*100) + "%");
@@ -236,6 +242,22 @@ $( document ).ready(function() {
             x2: (.3).toString(),
             y1: (0).toString(),
             y2: (.3).toString()
+        }, function( data ) {
+            UpdateChromecast();
+            Refresh();
+        }, "json");
+
+        $(".widgetList").hide();
+    });
+
+    $(".twitter_button").click(function() {
+        $.post( "/api/add", {
+            type: "twitter",
+            type_id: "123",
+            x1: (0).toString(),
+            x2: (.4).toString(),
+            y1: (0).toString(),
+            y2: (.7).toString()
         }, function( data ) {
             UpdateChromecast();
             Refresh();
