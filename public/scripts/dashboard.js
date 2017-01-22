@@ -1,5 +1,6 @@
 $( document ).ready(function() {
     // Start clock
+
     var interval = setInterval(function() {
         var momentNow = moment();
         $('.clock > .widget_content').html(
@@ -202,6 +203,8 @@ $( document ).ready(function() {
             });
 
 
+
+
             $( ".widget" ).draggable({
                 // start: function(event, ui) {
                 //     clearTimeout(pressTimer);
@@ -213,20 +216,37 @@ $( document ).ready(function() {
                     var y1 = ui.position.top / $(window).height();
                     var y2 = y1 + ($(this).height() / $(window).height());
 
-                    $.post( "/api/drop", {
-                        rev: $(this).find('.rev').html(),
-                        id: $(this).attr('id'),
-                        type: $(this).find('.type').html(),
-                        type_id: $(this).find('.type_id').html(),
-                        x1: x1.toString(),
-                        x2: x2.toString(),
-                        y1: y1.toString(),
-                        y2: y2.toString()
-                    }, function( data ) {
-                        // Refresh Chromecast!!!!
-                        UpdateChromecast();
-                        $(this).find('.rev').html(data.rev)
-                    }, "json");
+                    if ( x1 > .75 && y1 > .75 ){
+                        $.post( "/api/delete", {
+                            rev: $(this).find('.rev').html(),
+                            id: $(this).attr('id'),
+                            type: $(this).find('.type').html(),
+                            type_id: $(this).find('.type_id').html(),
+                            x1: x1.toString(),
+                            x2: x2.toString(),
+                        }, function( data ) {
+                            // Refresh Chromecast!!!!
+                            Refresh();
+                            UpdateChromecast();
+                            $(this).find('.rev').html(data.rev)
+                        }, "json");
+                    }
+                    else{
+                        $.post( "/api/drop", {
+                            rev: $(this).find('.rev').html(),
+                            id: $(this).attr('id'),
+                            type: $(this).find('.type').html(),
+                            type_id: $(this).find('.type_id').html(),
+                            x1: x1.toString(),
+                            x2: x2.toString(),
+                            y1: y1.toString(),
+                            y2: y2.toString()
+                        }, function( data ) {
+                            // Refresh Chromecast!!!!
+                            UpdateChromecast();
+                            $(this).find('.rev').html(data.rev)
+                        }, "json");
+                    }
                 }
             });
 
@@ -353,9 +373,11 @@ $( document ).ready(function() {
 
     $(".widgetList").hide();
 
+
     $(".plus").click(function() {
         $(".widgetList").toggle();
     });
+
 
 
 
@@ -371,7 +393,7 @@ $( document ).ready(function() {
 
 
     function UpdateChromecast() {
-        android.update();
+        // android.update();
     }
 
 });

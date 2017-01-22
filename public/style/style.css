@@ -230,7 +230,6 @@ div.add a {
 	text-align: center;
 	overflow: hidden;
 	line-height: 200px;
-	z-index: 0;
 }
 
 .widget_content > span {
@@ -238,6 +237,17 @@ div.add a {
 	vertical-align: middle;
 	line-height: normal;
 	opacity: 1.0 !important;
+    z-index: 0;
+}
+
+.widget_content {
+    position: absolute;
+    z-index: 1;
+}
+
+.span {
+    position: absolute;
+    z-index: 0;
 }
 
 .data {
@@ -246,14 +256,12 @@ div.add a {
 
 .widget {
 	position: absolute;
-	z-index: 1;
 }
 
 .widgetList {
 	position: relative;
 	right: 111px;
 	list-style-type: none;
-	z-index: 5;
 }
 
 .widgetList > li {
@@ -278,6 +286,7 @@ div.add ul.widgetList a {
 	line-height: 200px;
 }
 
+<<<<<<< Updated upstream
 .news > .widget_content {
 	height: 100%;
 	width: 100%;
@@ -333,3 +342,10 @@ div.add ul.widgetList a {
 	overflow: hidden;
 	line-height: 200px;
 }
+=======
+.trashcan {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+}
+>>>>>>> Stashed changes

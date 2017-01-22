@@ -246,9 +246,23 @@ app.post('/api/drop', function (req, res) {
     });
 });
 
-app.delete('/api/delete',  function(err) {
+
+app.post('/api/delete', function (req, res) {
     widgets_table.find({selector: {_id: req.body.id}}, function (err, results) {
-        //Delete the found ID
+        var doc = results.docs[0];
+        doc.x1 = -100;
+        doc.x2 = -120;
+
+        widgets_table.insert(doc, function (err, result) {
+            if (err) {
+                console.log(err);
+                res.sendStatus(500);
+            } else {
+                res.send(result);
+            }
+            res.end();
+        });
+
     });
 });
 
