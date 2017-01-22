@@ -216,6 +216,7 @@ tr:hover .deleteBtn {
 	text-align: center;
 	overflow: hidden;
 	line-height: 200px;
+	z-index: 0;
 }
 
 .widget_content > span {
@@ -230,12 +231,14 @@ tr:hover .deleteBtn {
 
 .widget {
 	position: absolute;
+	z-index: 1;
 }
 
 .widgetList {
 	position: relative;
 	right: 315px;
 	list-style-type: none;
+	z-index: 5;
 }
 
 .weather > .widget_content {

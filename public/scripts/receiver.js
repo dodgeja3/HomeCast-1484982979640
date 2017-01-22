@@ -35,7 +35,7 @@ $(document).ready(function () {
                     widget.css("width", ((parseFloat(doc.x2) - parseFloat(doc.x1))*100) + "%");
                     widget.css( "left", (parseFloat(doc.x1)*100) + "%");
                     widget.css( "top", (parseFloat(doc.y)*100) + "%");
-                    //$("#" + doc._id + " > .widget_content").css("line-height", (widget.height() - 50) + "px");
+                    $("#" + doc._id + " > .widget_content").css("line-height", (widget.height() - 50) + "px");
                 });
             });
         }
