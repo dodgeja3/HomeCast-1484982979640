@@ -250,6 +250,10 @@ tr:hover .deleteBtn {
 	z-index: 5;
 }
 
+.widgetList > li {
+	height: 35px;
+}
+
 div.add ul.widgetList a {
     font-size: 30px;
 }
@@ -267,7 +271,26 @@ div.add ul.widgetList a {
 	line-height: 200px;
 }
 
+.text > .widget_content {
+	height: 100%;
+	width: 100%;
+	font-size: 20px;
+	cursor: pointer;
+	background: rgba(169,169,169, 0.4);
+	color: #fff;
+	padding: 10px;
+	text-align: center;
+	overflow: hidden;
+	line-height: 200px;
+}
 
+.twitter {
+	/*height: 100%;*/
+	/*width: 100%;*/
+	cursor: pointer;
+	background: rgba(169,169,169, 0.4);
+	padding: 10px;
+}
 
 .calendar > .widget_content {
 	height: 100%;
