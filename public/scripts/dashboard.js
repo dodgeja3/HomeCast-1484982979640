@@ -88,7 +88,6 @@ $( document ).ready(function() {
 
             $( ".widget" ).draggable({
                 containment: "parent",
-                iframeFix: true,
                 stop: function(event, ui){
                     var x1 = ui.position.left / $(window).width();
                     var x2 = (x1 + $(this).width()) / $(window).width();
@@ -134,6 +133,20 @@ $( document ).ready(function() {
     //     }, "json");
     // });
     $(".clock").click(function() {
+        $.post( "/api/add", {
+            type: "clock",
+            type_id: "123",
+            x1: 0,
+            x2: .3,
+            y1: 0,
+            y2: .2
+        }, function( data ) {
+            UpdateChromecast();
+            Refresh();
+        }, "json");
+    });
+
+    $(".weather").click(function() {
         $.post( "/api/add", {
             type: "weather",
             type_id: "123",
