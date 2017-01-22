@@ -286,7 +286,6 @@ div.add ul.widgetList a {
 	line-height: 200px;
 }
 
-<<<<<<< Updated upstream
 .news > .widget_content {
 	height: 100%;
 	width: 100%;
@@ -342,10 +341,8 @@ div.add ul.widgetList a {
 	overflow: hidden;
 	line-height: 200px;
 }
-=======
 .trashcan {
     position: absolute;
     right: 16px;
     bottom: 16px;
 }
->>>>>>> Stashed changes

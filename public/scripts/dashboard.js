@@ -206,9 +206,9 @@ $( document ).ready(function() {
 
 
             $( ".widget" ).draggable({
-                // start: function(event, ui) {
-                //     clearTimeout(pressTimer);
-                // },
+                start: function(event, ui) {
+                    $(".trashcan").show();
+                },
                 containment: "parent",
                 stop: function(event, ui){
                     var x1 = ui.position.left / $(window).width();
@@ -216,7 +216,8 @@ $( document ).ready(function() {
                     var y1 = ui.position.top / $(window).height();
                     var y2 = y1 + ($(this).height() / $(window).height());
 
-                    if ( x1 > .75 && y1 > .75 ){
+                    $(".trashcan").hide();
+                    if ( x2 > .9 && y2 > .9 ){
                         $.post( "/api/delete", {
                             rev: $(this).find('.rev').html(),
                             id: $(this).attr('id'),
@@ -372,6 +373,8 @@ $( document ).ready(function() {
 
 
     $(".widgetList").hide();
+
+    $(".trashcan").hide();
 
 
     $(".plus").click(function() {
