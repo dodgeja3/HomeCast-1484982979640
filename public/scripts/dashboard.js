@@ -12,6 +12,11 @@ $( document ).ready(function() {
         );
     }, 100);
 
+
+
+
+
+
     $(".dashboard").height($(window).height());
 
     var hack = ["31946589405_deb63e02d6_o.jpg", "32260740536_2866cf4065_o.jpg", "bli_grc.jpg", "peggyw_spacewalk.jpg",
@@ -208,6 +213,24 @@ $( document ).ready(function() {
 
         $(".widgetList").hide();
     });
+
+
+    $(".calendar").click(function() {
+        $.post( "/api/add", {
+            type: "calendar",
+            type_id: "123",
+            x1: (0).toString(),
+            x2: (.3).toString(),
+            y1: (0).toString(),
+            y2: (.3).toString()
+        }, function( data ) {
+            UpdateChromecast();
+            Refresh();
+        }, "json");
+
+        $(".widgetList").hide();
+    });
+
 
     $(".widgetList").hide();
 

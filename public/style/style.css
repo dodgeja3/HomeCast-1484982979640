@@ -266,3 +266,18 @@ div.add ul.widgetList a {
 	overflow: hidden;
 	line-height: 200px;
 }
+
+
+
+.calendar > .widget_content {
+	height: 100%;
+	width: 100%;
+	font-size: 20px;
+	cursor: pointer;
+	background: rgba(169,169,169, 0.4);
+	color: #fff;
+	padding: 10px;
+	text-align: center;
+	overflow: hidden;
+	line-height: 200px;
+}
