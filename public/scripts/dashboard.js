@@ -79,6 +79,8 @@ $( document ).ready(function() {
 
             $( ".widget" ).draggable({
                 grid: [ 25, 25 ],
+                helper: "clone",
+                iframeFix: true,
                 stop: function(event, ui){
                     var x1 = ui.position.left;
                     var x2 = x1 + $(this).width();
