@@ -246,6 +246,12 @@ app.post('/api/drop', function (req, res) {
     });
 });
 
+app.delete('/api/delete',  function(err) {
+    widgets_table.find({selector: {_id: req.body.id}}, function (err, results) {
+        //Delete the found ID
+    });
+});
+
 app.get('/api/session', function (req, res) {
     res.setHeader('Content-Type', 'application/json');
     res.send(req.session.user);
