@@ -142,11 +142,16 @@ tr:hover .deleteBtn {
 }
 
 .plus {
-	color: red;
+	bottom: 12px;
+	position: relative;
+}
+
+.plus:hover {
+	text-decoration: none;
 }
 
 div.add a {
-	color:red;
+	color: #fff;
 }
 
 .errorMsg {
@@ -262,15 +267,35 @@ div.add a {
 	position: relative;
 	right: 111px;
 	list-style-type: none;
+	width: 390px;
+	background-color: #03182d;
+	height: 203px;
+	top: 34px;
 }
 
 .widgetList > li {
-	height: 45px;
+	height: 33px;
+	top: -14px;
+	position: relative;
 }
 
 div.add ul.widgetList a {
-    font-size: 30px;
-	color: red;
+    font-size: 25px;
+	color: #fff;
+	color: #e6e6e6;
+	bottom: 12px;
+	position: relative;
+}
+
+.outter {
+	background-color: #03182d;
+	position: relative;
+	height: 50px;
+	width: 50px;
+	bottom: -20px;
+	left: 10px;
+	text-align: center;
+	border-radius: 25px;
 }
 
 .weather > .widget_content {
