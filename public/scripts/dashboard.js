@@ -16,13 +16,28 @@ $( document ).ready(function() {
 
     var hack = ["31946589405_deb63e02d6_o.jpg", "32260740536_2866cf4065_o.jpg", "bli_grc.jpg", "peggyw_spacewalk.jpg",
         "pia13078.jpg", "pia14454.jpg", "pia20516-1041.jpg", "pia21056-1041.jpg", "pia21263.jpg", "pia21376d.jpg"];
-    $('body').css("background-image", "url(/images/pictures/" + hack[0] + ")");
+
+    // $.fn.preload = function() {
+    //     this.each(function(){
+    //         $('<img/>')[0].src = this;
+    //     });
+    // }
+
+    // // Usage:
+
+    // $(hack).preload();
+
+    // $('body').css("background-image", "url(/images/pictures/" + hack[0] + ")");
     var i = 1;
-    var backgrount_image = setInterval(function() {
-        $('body').css("background-image", "url(/images/pictures/" + hack[i] + ")");
+    
+    
+    var background_image = setInterval(function() {
+        $('.testclass').css('background-image', "url(/images/pictures/" + hack[i] + ")");
         if (i < 9) i++;
         else i = 0;
-    }, 20000);
+    }, 10000);
+
+    
 
     // Load widgets
     var Refresh = function() {
@@ -39,10 +54,22 @@ $( document ).ready(function() {
                 );
 
                 if (doc.type == "weather") {
-                    var description = "<![CDATA[<img src=\"http://l.yimg.com/a/i/us/we/52/29.gif\"/>\n<BR />\n<b>Current Conditions:</b>\n<BR />Partly Cloudy\n<BR />\n<BR />\n<b>Forecast:</b>\n<BR /> Sat - Partly Cloudy. High: 55Low: 40\n<BR /> Sun - Cloudy. High: 48Low: 40\n<BR /> Mon - Cloudy. High: 43Low: 38\n<BR /> Tue - Mostly Cloudy. High: 42Low: 33\n<BR /> Wed - Rain. High: 42Low: 37\n<BR />\n<BR />\n<a href=\"http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-2436453/\">Full Forecast at Yahoo! Weather</a>\n<BR />\n<BR />\n(provided by <a href=\"http://www.weather.com\" >The Weather Channel</a>)\n<BR />\n]]>";
-                    $('.weather > .widget_content').html(
-                        "<span>" + description + "</span>"
-                    );
+                    var url = "http://api.openweathermap.org/data/2.5/weather?q=EastLansing,MI&appid=269cf0387e2d75cb2d84effa38819bd2"
+
+                    $.getJSON(url).then(function(data) {
+                        console.log( );
+
+                        
+
+
+                        var description = "Temp: " + Math.round((9.0 / 5.0) * (data.main.temp - 273.15) + 32);
+                        $('.weather > .widget_content').html(
+                            "<span>" + description + "</span>"
+                        );
+                    });
+
+                    // var description = "<![CDATA[<img src=\"http://l.yimg.com/a/i/us/we/52/29.gif\"/>\n<BR />\n<b>Current Conditions:</b>\n<BR />Partly Cloudy\n<BR />\n<BR />\n<b>Forecast:</b>\n<BR /> Sat - Partly Cloudy. High: 55Low: 40\n<BR /> Sun - Cloudy. High: 48Low: 40\n<BR /> Mon - Cloudy. High: 43Low: 38\n<BR /> Tue - Mostly Cloudy. High: 42Low: 33\n<BR /> Wed - Rain. High: 42Low: 37\n<BR />\n<BR />\n<a href=\"http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-2436453/\">Full Forecast at Yahoo! Weather</a>\n<BR />\n<BR />\n(provided by <a href=\"http://www.weather.com\" >The Weather Channel</a>)\n<BR />\n]]>";
+                    
 
                     //$.get( "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22lansing%2C%20mi%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys", function( data ) {
                     //    //var description = data.query.results.channel.item.description;
@@ -58,7 +85,7 @@ $( document ).ready(function() {
                 widget.css("width", ((parseFloat(doc.x2) - parseFloat(doc.x1))*100) + "%");
                 widget.css( "left", (parseFloat(doc.x1)*100) + "%");
                 widget.css( "top", (parseFloat(doc.y1)*100) + "%");
-                $("#" + doc._id + " > .widget_content").css("line-height", (widget.height() - 50) + "px");
+                //$("#" + doc._id + " > .widget_content").css("line-height", (widget.height() - 50) + "px");
 
                 widget.resizable({
                     //grid: [ 25, 25 ],
