@@ -249,11 +249,13 @@ tr:hover .deleteBtn {
 }
 
 .widgetList > li {
-	height: 35px;
+	height: 30px;
+	top: -10px;
+	position: relative;
 }
 
 div.add ul.widgetList a {
-    font-size: 30px;
+    font-size: 25px;
 }
 
 .weather > .widget_content {
@@ -291,6 +293,16 @@ div.add ul.widgetList a {
 	color: #fff;
 	padding: 10px;
 	text-align: center;
+	overflow: hidden;
+	line-height: 200px;
+}
+
+.video > .widget_content {
+	height: 100%;
+	width: 100%;
+	cursor: pointer;
+	background: rgba(169,169,169, 0.4);
+	padding: 10px;
 	overflow: hidden;
 	line-height: 200px;
 }
