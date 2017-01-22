@@ -1,6 +1,4 @@
 $( document ).ready(function() {
-    ValidateChromecast();
-
     // Start clock
     var interval = setInterval(function() {
         var momentNow = moment();
@@ -120,18 +118,10 @@ $( document ).ready(function() {
             y1: 0,
             y2: 200
         }, function( data ) {
-            Refresh();
             UpdateChromecast();
+            Refresh();
         }, "json");
     });
-
-    function ValidateChromecast() {
-        if (android) {
-            $.get( "/api/session", function( data ) {
-                android.login(JSON.stringify(data));
-            });
-        }
-    }
 
     function UpdateChromecast() {
         android.update();

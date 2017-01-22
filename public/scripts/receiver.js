@@ -1,13 +1,43 @@
 $(document).ready(function () {
     // utility function to display the text message in the input field
     function process(message) {
-        document.getElementById("test").innerHTML=message;
-        window.castReceiverManager.setApplicationState(user);
+        // document.getElementById("test").innerHTML=message;
+        // window.castReceiverManager.setApplicationState(message);
 
         //$(".test").html(message);
-        message = JSON.parse(message);
-        if (message.action == "update") {
-            location.reload();
+        json = JSON.parse(message);
+        
+        if(json.action == "login") {
+            var u = json.user;
+            $.post( "/api/validate", {
+               email: u.email,
+               password: u.password
+            }, function( data ) {
+                
+            }, "json");
+        } else if (json.action == "update") {
+            document.getElementById("test").innerHTML=json.action;
+            
+            $(".widget").remove();
+            $.get( "/api/widgets", function( data ) {
+                $.each(data.docs, function(key, doc) {
+                    $(".dashboard").append(
+                        "<div class='" + doc.type + " widget' id='" + doc._id + "'>" +
+                        "<div class='data type'>" + doc.type + "</div>" +
+                        "<div class='data type_id'>" + doc.type_id + "</div>" +
+                        "<div class='data rev'>" + doc._rev + "</div>" +
+                        "<div class='widget_content'></div>" +
+                        "</div>"
+                    );
+
+                    var widget = $("#" + doc._id);
+                    widget.height((doc.y2 - doc.y1));
+                    widget.width((doc.x2 - doc.x1));
+                    widget.css( "left", doc.x1 + "px" );
+                    widget.css( "top", doc.y1 + "px" );
+                    $("#" + doc._id + " > .widget_content").css("line-height", (widget.height() - 50) + "px");
+                });
+            });
         }
     }
 

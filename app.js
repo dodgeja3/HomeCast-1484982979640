@@ -112,18 +112,44 @@ app.get('/', function (req, res) {
 });
 
 app.get('/receiver', function (req, res) {
+
+    res.render('receiver.html');
+
+});
+
+app.get('/sender', function (req, res) {
     //res.render('receiver.html');
     if (req.session.user) {
         console.log(req.session.user);
-        res.render('receiver.html');
+        res.render('sender.html');
     }
     else {
         res.redirect('/login');
     }
 });
 
-app.get('/validate', function (req, res) {
-    res.render('validate.html');
+app.post('/api/validate', function (req, res) {
+    console.log("Validating");
+    users_table.find({selector: {email: req.body.email}}, function (err, results) {
+        if (!results.docs[0]) {
+            res.setHeader('Content-Type', 'application/json');
+            res.send("Go fuck yourself");
+            console.log("Go fuck yourself");
+        } else {
+            user = results.docs[0];
+            console.log("This is /api/validate");
+            console.log(user);
+            if (req.body.password == user.password) {
+                req.session.user = user;
+                res.setHeader('Content-Type', 'application/json');
+                res.send(req.session.user);
+                //res.render('receiver.html');
+            } else {
+                res.setHeader('Content-Type', 'application/json');
+                res.send("Go fuck yourself again");
+            }
+        }
+    });
 });
 
 app.get('/signup', function (req, res) {
