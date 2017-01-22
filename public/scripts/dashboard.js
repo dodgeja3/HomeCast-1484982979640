@@ -78,7 +78,7 @@ $( document ).ready(function() {
 
 
             $( ".widget" ).draggable({
-                grid: [ 25, 25 ],
+                //grid: [ 25, 25 ],
                 stop: function(event, ui){
                     var x1 = ui.position.left;
                     var x2 = x1 + $(this).width();
