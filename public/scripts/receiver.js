@@ -77,8 +77,8 @@ $(document).ready(function () {
                             "var player;"+
                             "function onYouTubeIframeAPIReady() {"+
                             "player = new YT.Player('player', {"+
-                            "height: '150',"+
-                            "width: '250',"+
+                            "height: '200',"+
+                            "width: '300',"+
                             "videoId: 'M7lc1UVf-VE',"+
                             "events: {"+
                             "'onReady': onPlayerReady,"+
