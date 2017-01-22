@@ -80,6 +80,12 @@ $( document ).ready(function() {
                     //});
                 }
 
+                if (doc.type == "text") {
+                    $('.text > .widget_content').html(
+                        "<span>You have no new texts.</span>"
+                    );
+                }
+
                 var widget = $("#" + doc._id);
                 widget.css("height", ((parseFloat(doc.y2) - parseFloat(doc.y1))*100) + "%");
                 widget.css("width", ((parseFloat(doc.x2) - parseFloat(doc.x1))*100) + "%");
