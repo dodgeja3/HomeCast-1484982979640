@@ -102,7 +102,9 @@ $( document ).ready(function() {
                 }
             });
 
-
+            $('body>div').bind("dragstart", function(event, ui){
+                event.stopPropagation();
+            });
         });
     };
 
